@@ -19,8 +19,14 @@ class Dictionary(object):
 class Corpus(object):
     def __init__(self, path):
         self.dictionary = Dictionary()
+
+        print("-----Tokenizing the training file-----")
         self.train = self.tokenize(os.path.join(path, 'train.txt'))
+
+        print("-----Tokenizing the validation file-----")
         self.valid = self.tokenize(os.path.join(path, 'valid.txt'))
+
+        print("-----Tokenizing the testing file-----")
         self.test = self.tokenize(os.path.join(path, 'test.txt'))
 
     def tokenize(self, path):
@@ -30,19 +36,21 @@ class Corpus(object):
         with open(path, 'r', encoding="utf8") as f:
             tokens = 0
             for line in f:
-                words = line.split() + ['<eos>']
+                words = ['<start>'] + line.split() + ['<eos>']
                 tokens += len(words)
                 for word in words:
                     self.dictionary.add_word(word)
+
+        print("Total number of tokens:\t{0}".format(tokens))
+        print("Size of vocabulary:\t{0}\n".format(len(self.dictionary.word2idx.keys())))
 
         # Tokenize file content
         with open(path, 'r', encoding="utf8") as f:
             ids = torch.LongTensor(tokens)
             token = 0
             for line in f:
-                words = line.split() + ['<eos>']
+                words = ['<start>'] + line.split() + ['<eos>']
                 for word in words:
                     ids[token] = self.dictionary.word2idx[word]
                     token += 1
-
         return ids

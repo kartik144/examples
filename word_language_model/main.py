@@ -11,7 +11,7 @@ import data
 import model
 
 parser = argparse.ArgumentParser(description='PyTorch Wikitext-2 RNN/LSTM Language Model')
-parser.add_argument('--data', type=str, default='./data/wikitext-2',
+parser.add_argument('--data', type=str, default='./data/penn',
                     help='location of the data corpus')
 parser.add_argument('--model', type=str, default='LSTM',
                     help='type of recurrent net (RNN_TANH, RNN_RELU, LSTM, GRU)')
@@ -113,7 +113,7 @@ def repackage_hidden(h):
 # a bptt-limit of 2, we'd get the following two Variables for i = 0:
 # ┌ a g m s ┐ ┌ b h n t ┐
 # └ b h n t ┘ └ c i o u ┘
-# Note that despite the name of the function, the subdivison of data is not
+# Note that despite the name of the function, the subdivision of data is not
 # done along the batch dimension (i.e. dimension 1), since that was handled
 # by the batchify function. The chunks are along dimension 0, corresponding
 # to the seq_len dimension in the LSTM.
