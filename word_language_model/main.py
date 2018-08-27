@@ -45,6 +45,8 @@ parser.add_argument('--save', type=str, default='model.pt',
                     help='path to save the final model')
 parser.add_argument('--onnx-export', type=str, default='',
                     help='path to export the final model in onnx format')
+parser.add_argument('--bi', action='store_true',
+                    help='use bidirectional recurrent net')  # New feature added
 args = parser.parse_args()
 
 # Set the random seed manually for reproducibility.
@@ -92,7 +94,7 @@ test_data = batchify(corpus.test, eval_batch_size)
 ###############################################################################
 
 ntokens = len(corpus.dictionary)
-model = model.RNNModel(args.model, ntokens, args.emsize, args.nhid, args.nlayers, args.dropout, args.tied).to(device)
+model = model.RNNModel(args.model, ntokens, args.emsize, args.nhid, args.nlayers, args.dropout, args.tied, args.bi).to(device)
 
 criterion = nn.CrossEntropyLoss()
 
