@@ -1,5 +1,12 @@
 import torch.nn as nn
 
+####################################################
+################# TODO #############################
+####################################################
+###  Check why the bi-directional model overfits ###
+### on generating text. ############################
+####################################################
+####################################################
 class RNNModel(nn.Module):
     """Container module with an encoder, a recurrent module, and a decoder."""
 
